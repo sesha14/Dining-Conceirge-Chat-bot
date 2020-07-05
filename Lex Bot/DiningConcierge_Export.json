@@ -1,0 +1,277 @@
+{
+  "metadata": {
+    "schemaVersion": "1.0",
+    "importType": "LEX",
+    "importFormat": "JSON"
+  },
+  "resource": {
+    "name": "DiningConcierge",
+    "version": "6",
+    "intents": [
+      {
+        "rejectionStatement": {
+          "messages": [
+            {
+              "contentType": "PlainText",
+              "content": "Okay. I won't be sending you the suggestions."
+            }
+          ]
+        },
+        "name": "DiningSuggestionsIntent",
+        "version": "15",
+        "fulfillmentActivity": {
+          "codeHook": {
+            "uri": "arn:aws:lambda:us-east-1:162560567046:function:LF1",
+            "messageVersion": "1.0"
+          },
+          "type": "CodeHook"
+        },
+        "sampleUtterances": [
+          "I wanna dine out {Date}",
+          "I wanna have some {Cuisine} food.",
+          "I wanna have some {Cuisine} null.",
+          "I wanna have some {Cuisine} {Date} in {Location} at {Time} for {Party} people",
+          "I wanna have some {Cuisine} food {Date} in {Location} at {Time} for {Party} people",
+          "I wanna have {Cuisine} food {Date} in {Location} at {Time} for {Party} people",
+          "I wanna have {Cuisine} {Date} in {Location} at {Time} for {Party} people",
+          "I want to make a reservation for {Cuisine} food around {Location} on {Date} at {Time} for {Party} people",
+          "I want to eat {Cuisine} food in {Location} on {Date} at {Time} for {Party} people",
+          "I wanna have some {Cuisine} food {Date}",
+          "I need some restaurant suggestions",
+          "Okay give me some restaurant suggestions"
+        ],
+        "slots": [
+          {
+            "sampleUtterances": [
+              "I would love some {Cuisine}",
+              "How about {Cuisine}",
+              "{Cuisine} would be great"
+            ],
+            "slotType": "AMAZON.Food",
+            "obfuscationSetting": "NONE",
+            "slotConstraint": "Required",
+            "valueElicitationPrompt": {
+              "messages": [
+                {
+                  "contentType": "PlainText",
+                  "content": "Got it, {Location}. What cuisine would you like to try?"
+                }
+              ],
+              "responseCard": "{\"version\":1,\"contentType\":\"application/vnd.amazonaws.card.generic\"}",
+              "maxAttempts": 2
+            },
+            "priority": 2,
+            "name": "Cuisine"
+          },
+          {
+            "sampleUtterances": [],
+            "slotType": "AMAZON.DATE",
+            "obfuscationSetting": "NONE",
+            "slotConstraint": "Required",
+            "valueElicitationPrompt": {
+              "messages": [
+                {
+                  "contentType": "PlainText",
+                  "content": "A few more to go. What date?"
+                }
+              ],
+              "maxAttempts": 2
+            },
+            "priority": 4,
+            "name": "Date"
+          },
+          {
+            "sampleUtterances": [
+              "Near {Location}",
+              "Around {Location} area"
+            ],
+            "slotType": "AMAZON.US_CITY",
+            "obfuscationSetting": "NONE",
+            "slotConstraint": "Required",
+            "valueElicitationPrompt": {
+              "messages": [
+                {
+                  "contentType": "PlainText",
+                  "content": "Great. I can help you with that. What city or area are you looking to dine in?"
+                }
+              ],
+              "responseCard": "{\"version\":1,\"contentType\":\"application/vnd.amazonaws.card.generic\"}",
+              "maxAttempts": 2
+            },
+            "priority": 1,
+            "name": "Location"
+          },
+          {
+            "sampleUtterances": [
+              "Just {Party}",
+              "We're {Party} people"
+            ],
+            "slotType": "AMAZON.NUMBER",
+            "obfuscationSetting": "NONE",
+            "slotConstraint": "Required",
+            "valueElicitationPrompt": {
+              "messages": [
+                {
+                  "contentType": "PlainText",
+                  "content": "Okay, how many people are in your party?"
+                }
+              ],
+              "responseCard": "{\"version\":1,\"contentType\":\"application/vnd.amazonaws.card.generic\"}",
+              "maxAttempts": 2
+            },
+            "priority": 3,
+            "name": "Party"
+          },
+          {
+            "sampleUtterances": [
+              "Sure. it's {Phone}",
+              "It's {Phone}"
+            ],
+            "slotType": "AMAZON.PhoneNumber",
+            "obfuscationSetting": "NONE",
+            "slotConstraint": "Required",
+            "valueElicitationPrompt": {
+              "messages": [
+                {
+                  "contentType": "PlainText",
+                  "content": "Great. Lastly, I need your phone number so I can send you my findings."
+                }
+              ],
+              "responseCard": "{\"version\":1,\"contentType\":\"application/vnd.amazonaws.card.generic\"}",
+              "maxAttempts": 2
+            },
+            "priority": 6,
+            "name": "Phone"
+          },
+          {
+            "sampleUtterances": [
+              "About {Time}"
+            ],
+            "slotType": "AMAZON.TIME",
+            "obfuscationSetting": "NONE",
+            "slotConstraint": "Required",
+            "valueElicitationPrompt": {
+              "messages": [
+                {
+                  "contentType": "PlainText",
+                  "content": "What time?"
+                }
+              ],
+              "responseCard": "{\"version\":1,\"contentType\":\"application/vnd.amazonaws.card.generic\"}",
+              "maxAttempts": 2
+            },
+            "priority": 5,
+            "name": "Time"
+          }
+        ],
+        "confirmationPrompt": {
+          "messages": [
+            {
+              "contentType": "PlainText",
+              "content": "Okay, I have you down for {Cuisine} food in {Location} on {Date} at {Time} for {Party} people.  Shall I send you the suggestions?"
+            }
+          ],
+          "maxAttempts": 3
+        },
+        "dialogCodeHook": {
+          "uri": "arn:aws:lambda:us-east-1:162560567046:function:LF1",
+          "messageVersion": "1.0"
+        }
+      },
+      {
+        "name": "ThankYouIntent",
+        "version": "4",
+        "fulfillmentActivity": {
+          "codeHook": {
+            "uri": "arn:aws:lambda:us-east-1:162560567046:function:LF1",
+            "messageVersion": "1.0"
+          },
+          "type": "CodeHook"
+        },
+        "sampleUtterances": [
+          "Thanks",
+          "Thank you",
+          "Okay thanks"
+        ],
+        "slots": [],
+        "dialogCodeHook": {
+          "uri": "arn:aws:lambda:us-east-1:162560567046:function:LF1",
+          "messageVersion": "1.0"
+        }
+      },
+      {
+        "name": "GreetingIntent",
+        "version": "3",
+        "fulfillmentActivity": {
+          "codeHook": {
+            "uri": "arn:aws:lambda:us-east-1:162560567046:function:LF1",
+            "messageVersion": "1.0"
+          },
+          "type": "CodeHook"
+        },
+        "sampleUtterances": [
+          "Hi",
+          "Hello",
+          "Hey",
+          "Yo",
+          "Hello Jarvis"
+        ],
+        "slots": [],
+        "dialogCodeHook": {
+          "uri": "arn:aws:lambda:us-east-1:162560567046:function:LF1",
+          "messageVersion": "1.0"
+        },
+        "conclusionStatement": {
+          "messages": [
+            {
+              "groupNumber": 1,
+              "contentType": "PlainText",
+              "content": "Great. I can help you with that. What area are you looking to dine in?"
+            }
+          ]
+        }
+      },
+      {
+        "name": "ValidateRestaurantIntent",
+        "version": "5",
+        "fulfillmentActivity": {
+          "codeHook": {
+            "uri": "arn:aws:lambda:us-east-1:162560567046:function:LF1",
+            "messageVersion": "1.0"
+          },
+          "type": "CodeHook"
+        },
+        "sampleUtterances": [
+          "I want some movies suggestions"
+        ],
+        "slots": [],
+        "dialogCodeHook": {
+          "uri": "arn:aws:lambda:us-east-1:162560567046:function:LF1",
+          "messageVersion": "1.0"
+        }
+      }
+    ],
+    "voiceId": "0",
+    "childDirected": false,
+    "locale": "en-US",
+    "idleSessionTTLInSeconds": 300,
+    "clarificationPrompt": {
+      "messages": [
+        {
+          "contentType": "PlainText",
+          "content": "Sorry, can you please repeat that?"
+        }
+      ],
+      "maxAttempts": 5
+    },
+    "abortStatement": {
+      "messages": [
+        {
+          "contentType": "PlainText",
+          "content": "Sorry, I could not understand. Goodbye."
+        }
+      ]
+    },
+    "detectSentiment": false
+  }
+}
